@@ -35,8 +35,9 @@ class Maybe<T> {
 	}
 }
 
+// interleaves spaces & newlines to format tic tac toe board
 const spaceOrNewLine = (i: number): string =>
-	(i + 1) % 3 === 0 ? '\n' : ' ';
+	(i + 1) % 3 === 0 ? '\n' : ' '; // this is a branch example
 
 const addSpaceToArray = (a: Mark[]): Mark[] =>
 	a.concat(' ')
@@ -45,12 +46,12 @@ const addSpaceToArray = (a: Mark[]): Mark[] =>
 const createNewBoard = (): Mark[] =>
 	Array(9).fill(' ');
 
-const formatTile = (x: Mark, i: number, arr: Mark[]): string =>
-`[${x}]${spaceOrNewLine(i)}`
+const formatTile = (x: Mark, i: number): string =>
+	`[${x}]${spaceOrNewLine(i)}`
 
-//console.log(`${b[0]} ${b[1]} ${b[2]}`);
-// prints board 'b' to console
-const formatBoard = (b: Mark[]) =>
+// this is bad: console.log(`${b[0]} ${b[1]} ${b[2]}`);
+// flattens board 'b' to string for convenient printing
+const formatBoard = (b: Mark[]): string =>
 	b
 		.map(formatTile)
 		.join('');
@@ -68,6 +69,9 @@ const printString = (s: string): void =>
 // const getValidMoves = () =>
 
 const main = () => {
+	// to-do: clean this up, so, that eventually, it looks more like
+	// start() => show() => do()
+	// createNewBoard() => formatBoard() => printString();
 	printString(formatBoard(createNewBoard()));
 }
 
@@ -76,3 +80,26 @@ main();
 // interface Array<T> {
 // 	fill(value: T): Array<T>;
 // }
+
+// done list:
+// build the typescript project
+// define board index state space
+// import maybe definition
+// create the board
+// render the board
+// start the program
+
+// to-do list:
+// place marks
+// create I/O (take user input, return back response) w/ Maybe
+// establish control flow (also w/ Maybe)
+
+// intentions:
+// use as much functional programming as possible while comprehensible
+//   (for example, no while loops, no if-else statements)
+// as there is opportunity to do so where it makes sense,
+//   remove branching, such as take 3 from array and do w/
+//   for example monadic functions:
+//   takeWhile(array, i=> (i+1) % 3 === 0).then(format).then(addNewLine);
+//   partitionBy(array, 3).then(format).then(addNewLine);
+// use only pure functions (no side effects)

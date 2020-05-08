@@ -1,0 +1,1 @@
+concurrently tsc -w --target ES6 && node index.js

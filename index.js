@@ -27,13 +27,14 @@ class Maybe {
         }
     }
 }
+// interleaves spaces & newlines to format tic tac toe board
 const spaceOrNewLine = (i) => (i + 1) % 3 === 0 ? '\n' : ' ';
 const addSpaceToArray = (a) => a.concat(' ');
 // type MaybeMark = Maybe<Mark>;;
 const createNewBoard = () => Array(9).fill(' ');
-const formatTile = (x, i, arr) => `[${x}]${spaceOrNewLine(i)}`;
-//console.log(`${b[0]} ${b[1]} ${b[2]}`);
-// prints board 'b' to console
+const formatTile = (x, i) => `[${x}]${spaceOrNewLine(i)}`;
+// this is bad: console.log(`${b[0]} ${b[1]} ${b[2]}`);
+// flattens board 'b' to string for convenient printing
 const formatBoard = (b) => b
     .map(formatTile)
     .join('');
@@ -51,3 +52,14 @@ main();
 // interface Array<T> {
 // 	fill(value: T): Array<T>;
 // }
+// done list:
+// build the typescript project
+// define board index state space
+// import maybe definition
+// create the board
+// render the board
+// start the program
+// to-do list:
+// place marks
+// create I/O (take user input, return back response) w/ Maybe
+// establish control flow (also w/ Maybe)
