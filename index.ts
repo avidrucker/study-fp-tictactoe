@@ -5,59 +5,48 @@
 type Mark = 'X' | 'O' | ' ';
 
 class Maybe<T> {
-	private constructor(private value: T | null) {}
+  private constructor(private value: T | null) {}
 
-	static some<T>(value: T) {
-			if (!value) {
-					throw Error("Provided value must not be empty");
-			}
-			return new Maybe(value);
-	}
+  static some<T>(value: T) {
+    if (!value) {
+      throw Error('Provided value must not be empty');
+    }
+    return new Maybe(value);
+  }
 
-	static none<T>() {
-			return new Maybe<T>(null);
-	}
+  static none<T>() {
+    return new Maybe<T>(null);
+  }
 
-	static fromValue<T>(value: T) {
-			return value ? Maybe.some(value) : Maybe.none<T>();
-	}
+  static fromValue<T>(value: T) {
+    return value ? Maybe.some(value) : Maybe.none<T>();
+  }
 
-	getOrElse(defaultValue: T) {
-			return this.value === null ? defaultValue : this.value;
-	}
+  getOrElse(defaultValue: T) {
+    return this.value === null ? defaultValue : this.value;
+  }
 
-	map<R>(f: (wrapped: T) => R): Maybe<R> {
-		if (this.value === null) {
-			return Maybe.none<R>();
-		} else {
-			return Maybe.fromValue(f(this.value));
-		}
-	}
+  map<R>(f: (wrapped: T) => R): Maybe<R> {
+    if (this.value === null) {
+      return Maybe.none<R>();
+    } else {
+      return Maybe.fromValue(f(this.value));
+    }
+  }
 }
 
 // interleaves spaces & newlines to format tic tac toe board
-const spaceOrNewLine = (i: number): string =>
-	(i + 1) % 3 === 0 ? '\n' : ' '; // this is a branch example
-
-const addSpaceToArray = (a: Mark[]): Mark[] =>
-	a.concat(' ')
+const spaceOrNewLine = (i: number): string => ((i + 1) % 3 === 0 ? '\n' : ' '); // this is a branch example
+const addSpaceToArray = (a: Mark[]): Mark[] => a.concat(' ');
 
 // type MaybeMark = Maybe<Mark>;;
-const createNewBoard = (): Mark[] =>
-	Array(9).fill(' ');
-
-const formatTile = (x: Mark, i: number): string =>
-	`[${x}]${spaceOrNewLine(i)}`
+const createNewBoard = (): Mark[] => Array(9).fill(' ');
+const formatTile = (x: Mark, i: number): string => `[${x}]${spaceOrNewLine(i)}`;
 
 // this is bad: console.log(`${b[0]} ${b[1]} ${b[2]}`);
 // flattens board 'b' to string for convenient printing
-const formatBoard = (b: Mark[]): string =>
-	b
-		.map(formatTile)
-		.join('');
-
-const printString = (s: string): void =>
-	console.log(s);
+const formatBoard = (b: Mark[]): string => b.map(formatTile).join('');
+const printString = (s: string): void => console.log(s);
 
 // gets user choice (1-9)
 // const getUserChoice = () =>
@@ -69,11 +58,11 @@ const printString = (s: string): void =>
 // const getValidMoves = () =>
 
 const main = () => {
-	// to-do: clean this up, so, that eventually, it looks more like
-	// start() => show() => do()
-	// createNewBoard() => formatBoard() => printString();
-	printString(formatBoard(createNewBoard()));
-}
+  // to-do: clean this up, so, that eventually, it looks more like
+  // start() => show() => do()
+  // createNewBoard() => formatBoard() => printString();
+  printString(formatBoard(createNewBoard()));
+};
 
 main();
 
