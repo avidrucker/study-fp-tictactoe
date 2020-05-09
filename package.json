@@ -1,0 +1,13 @@
+{
+  "name": "fp-tic-tac-toe",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "watch-and-run": "concurrently --kill-others --names \"BUILD,RUN\" -c \"bgBlue.bold,bgMagenta.bold\" \"tsc -w\" \"nodemon -q -w dist dist/index.js\""
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.3",
+    "typescript": "^3.8.3"
+  }
+}
