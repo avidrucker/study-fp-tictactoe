@@ -1,3 +1,5 @@
+const readline = require('readline');
+
 // define string union (an instance of a union type,
 // indicated by OR operand '|')
 // this is commonplace better practice than enums,
@@ -80,6 +82,33 @@ const initGame = (): GameTuple => {
 // const show = (b: Mark[], t: turn): void => {
 // }
 
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+  
+//   rl.question('What do you think of Node.js? ', (answer) => {
+// 	// TODO: Log the answer in a database
+// 	console.log(`Thank you for your valuable feedback: ${answer}`);
+  
+// 	rl.close();
+//   });
+
+function ask(questionText: string) {
+	return new Promise((resolve, reject) => {
+		rl.question(questionText, (input: string) => resolve(input) );
+	});
+};
+
+//start (only happens once) DONE
+// gameLoop()
+	//render() DONE
+	//promptUser()
+	//receiveInput()
+	//updateGameState() // based on userInput()
+	//gameLoop()
+
+
 const main = () => {
 	// to-do: clean this up, so, that eventually, it looks more like
 	// start() => show() => do()
@@ -87,7 +116,12 @@ const main = () => {
 	// printString(formatBoard(createNewBoard()));
 	// printString(formatBoard(placeMark(createNewBoard(), 2, 'X'))); // testing - put down a single mark
 	// printString(formatBoard(placeMark(placeMark(createNewBoard(), 2, 'X'), 2, 'O'))); // testing2 - modify stored marks
-	printString(formatBoard(createNewBoard()));
+	// printString(formatBoard(createNewBoard()));
+	ask("What is your name?").then((x)=>{
+		console.log(`Hi ${x}`);
+	}).catch((err)=>{
+		console.log(`Oh no! There was an error: ${err}`)
+	});
 };
 
 // The [program menu] game flow is simply a recursive function (instead of a loop)
@@ -124,7 +158,9 @@ main();
 // establish over-arching control flow (also w/ Maybe)
 
 // to-do list:
-// create I/O (take user input, return back response) w/ Maybe
+// - set up I/O
+// 1. take user input
+// 2. return back response w/ Maybe
 
 // intentions:
 // use as much functional programming as possible while comprehensible
