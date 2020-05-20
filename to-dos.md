@@ -15,10 +15,19 @@ Note: To keep it all together, we can use a tuple, a union type, or an object (m
 - decide whether to make the program coded sync or async: async w/ promises
 - establish over-arching control flow (also w/ Maybe)
 
+## in-progress list:
+- [ ] set up I/O
+	- [ ] take user input
+		- [ ] inform user when their input is bad
+		- [ ] re-ask user when their input is bad
+		- [ ] return validated (correct input)
+	- [ ]  return back response w/ Maybe (dup?)
+
 ## to-do list:
-- set up I/O
-1. take user input
-2. return back response w/ Maybe
+- update board with validated (correct) user input
+- update turn after Player (1) has put down their mark
+- inform Players whose turn it is at the beginning of each turn
+- update q_and_a prompt to direct specific Player (1 or 2) whose turn it is to make their move
 
 ## intentions:
 - use as much functional programming as possible while comprehensible
