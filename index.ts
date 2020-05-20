@@ -95,7 +95,7 @@ const rl = readline.createInterface({
 //   });
 
 function ask(questionText: string) {
-	return new Promise((resolve, reject) => {
+	return new Promise<string>((resolve, reject) => {
 		rl.question(questionText, (input: string) => resolve(input) );
 	});
 };
@@ -108,20 +108,43 @@ function ask(questionText: string) {
 	//updateGameState() // based on userInput()
 	//gameLoop()
 
+type ValidatedAnswer = {
+	valid: boolean;
+	answer: string;
+}
+
+// todo: make type ValidatedAnswer
+// returns boolean that the answer is valid
+// as well as the answer itself
+const validate = (input: string, oks: string[]): ValidatedAnswer => {
+	return {
+		valid: input in oks,
+		answer: input
+	};
+};
+
+// todo: fix bug where valid input is considered as index of array,
+//    rather than by array index content
+//    idea: use a function such as indexOf, find(), exists(), etc.
+//          to validate presence of valid answer
+// todo: fix any return to be a Maybe (`string | null` perhaps?)
+const q_and_a = (q: string, oks: string[]): any => {
+	return ask(q)
+		.then(a => validate(a, oks))
+		.then(va => va['valid'] ? va['answer'] : q_and_a(q, oks))
+		.catch((err)=>{
+			console.log(`Oh no! There was an error: ${err}`)
+	});
+}
+
+const aOK = ['5','6','7'];
 
 const main = () => {
-	// to-do: clean this up, so, that eventually, it looks more like
-	// start() => show() => do()
 	// createNewBoard() => formatBoard() => printString();
-	// printString(formatBoard(createNewBoard()));
 	// printString(formatBoard(placeMark(createNewBoard(), 2, 'X'))); // testing - put down a single mark
 	// printString(formatBoard(placeMark(placeMark(createNewBoard(), 2, 'X'), 2, 'O'))); // testing2 - modify stored marks
 	// printString(formatBoard(createNewBoard()));
-	ask("What is your name?").then((x)=>{
-		console.log(`Hi ${x}`);
-	}).catch((err)=>{
-		console.log(`Oh no! There was an error: ${err}`)
-	});
+	q_and_a(`Where to place your mark? ${aOK}:`, aOK);
 };
 
 // The [program menu] game flow is simply a recursive function (instead of a loop)
@@ -139,40 +162,3 @@ main();
 // interface Array<T> {
 // 	fill(value: T): Array<T>;
 // }
-
-// necessary game state
-// - whose turn it is, could be an integer,
-//   could be a boolean flag, could be derived from the board state
-// - the board array
-// To keep it all together, we can use a tuple, a union type, or an object (map)
-
-// done list:
-// build the typescript project
-// define board index state space
-// import maybe definition
-// create the board
-// render the board
-// start the program
-// place marks
-// decide whether to make the program coded sync or async: async w/ promises
-// establish over-arching control flow (also w/ Maybe)
-
-// to-do list:
-// - set up I/O
-// 1. take user input
-// 2. return back response w/ Maybe
-
-// intentions:
-// use as much functional programming as possible while comprehensible
-//   (for example, no while loops, no if-else statements)
-// as there is opportunity to do so where it makes sense,
-//   remove branching, such as take 3 from array and do w/
-//   for example monadic functions:
-//   takeWhile(array, i=> (i+1) % 3 === 0).then(format).then(addNewLine);
-//   partitionBy(array, 3).then(format).then(addNewLine);
-// use only pure functions (no side effects)
-
-// ideas:
-// - build according to control flow (or happy path of user)
-// - build modularly from/to their logical functional conclusion
-// - async can be async/await, callbacks, promises, generators (think in streams)
